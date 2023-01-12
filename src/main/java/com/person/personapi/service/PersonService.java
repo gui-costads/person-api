@@ -29,13 +29,11 @@ public class PersonService {
         );
     }
 
-    public Person create(PersonDTO personDto){
-        Person person = personMapper.personDtoToPerson(personDto);
+    public Person create(Person person){
         return personRepository.save(person);
     }
 
-    public Person update(Long id, PersonDTO personDTO){
-        Person person = personMapper.personDtoToPerson(personDTO);
+    public Person update(Long id, Person person){
         Person personIdtoUpdate = findById(person.getId());
         personIdtoUpdate.setName(person.getName());
         personIdtoUpdate.setBirth(person.getBirth());
