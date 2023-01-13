@@ -54,4 +54,12 @@ public class Person {
     public void setBirth(LocalDate birth) {
         this.birth = birth;
     }
+
+    public List<Address> getAddress() {
+        return address;
+    }
+
+    public void setAddress(List<Address> address) {
+        this.address = address;
+    }
 }

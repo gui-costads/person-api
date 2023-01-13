@@ -2,15 +2,13 @@ package com.person.personapi.controller;
 
 import com.person.personapi.mapper.PersonMapper;
 import com.person.personapi.model.Person;
-import com.person.personapi.personDTO.PersonCreateDTO;
-import com.person.personapi.personDTO.PersonDTO;
+import com.person.personapi.dto.PersonCreateDTO;
+import com.person.personapi.dto.PersonDTO;
 import com.person.personapi.service.PersonService;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.Path;
 import java.util.List;
 
 @RestController
@@ -26,9 +24,10 @@ public class PersonController {
     }
 
     @GetMapping("/person")
-    public ResponseEntity<List<Person>> findAll(){
+    public ResponseEntity<List<PersonDTO>> findAll(){
         List<Person> personList = personService.findAll();
-        return ResponseEntity.ok(personList);
+        List<PersonDTO> personDTOList = personMapper.personListToPersonDtoList(personList);
+        return ResponseEntity.ok(personDTOList);
     }
 
     @GetMapping("/person/{id}")

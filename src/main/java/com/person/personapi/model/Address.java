@@ -8,10 +8,13 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "address_id", nullable = false)
     private Long id;
-
+    @Column(name = "street", nullable = false)
     private String street;
+    @Column(name = "numer", nullable = false)
     private String number;
+    @Column(name = "city", nullable = false)
     private String city;
+    @Column(name = "postalCode", nullable = false)
     private String postalCode;
     @ManyToOne
     @JoinColumn(name = "person_id", nullable = false)

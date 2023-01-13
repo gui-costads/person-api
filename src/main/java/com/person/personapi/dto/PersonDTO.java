@@ -1,4 +1,4 @@
-package com.person.personapi.personDTO;
+package com.person.personapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
