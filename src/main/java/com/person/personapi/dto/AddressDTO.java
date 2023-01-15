@@ -1,22 +1,39 @@
 package com.person.personapi.dto;
 
-import com.person.personapi.model.Person;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.Length;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AddressDTO {
+    private Long id;
+    @NotNull
+    @NotBlank
+    @Size(min = 1, max = 50)
     private String street;
+    @NotNull
+    @NotBlank
+    @Size(min = 1, max = 20)
     private String number;
-    private String postalCode;
+    @NotNull
+    @NotBlank
+    @Size(min = 1, max = 50)
     private String city;
-    private Person person;
 
-    public AddressDTO() {
+    @Pattern(regexp = "\\d{5}-\\d{3}")
+    @NotNull
+    @NotBlank
+    private String postalCode;
+
+    public Long getId() {
+        return id;
     }
-    public AddressDTO(String street, String number, String postalCode, String city, Person person) {
-        this.street = street;
-        this.number = number;
-        this.postalCode = postalCode;
-        this.city = city;
-        this.person = person;
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getStreet() {
@@ -49,13 +66,5 @@ public class AddressDTO {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
     }
 }
