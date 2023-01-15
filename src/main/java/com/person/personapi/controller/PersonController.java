@@ -24,37 +24,38 @@ public class PersonController {
     }
 
     @GetMapping("/person")
-    public ResponseEntity<List<PersonDTO>> findAll(){
+    public ResponseEntity<List<PersonDTO>> findAll() {
         List<Person> personList = personService.findAll();
         List<PersonDTO> personDTOList = personMapper.personListToPersonDtoList(personList);
         return ResponseEntity.ok(personDTOList);
     }
 
     @GetMapping("/person/{id}")
-    public ResponseEntity<PersonDTO> findById(Long id){
+    public ResponseEntity<PersonDTO> findById(Long id) {
         Person person = personService.findById(id);
         PersonDTO personDTO = personMapper.personToPersonDto(person);
         return ResponseEntity.ok(personDTO);
     }
 
     @PostMapping("/person")
-    public ResponseEntity<PersonDTO> createPerson(@RequestBody PersonCreateDTO personCreateDTO){
-        Person person = personMapper.personCreateDtoToPerson(personCreateDTO);
-        Person personCreated = personService.create(person);
-        PersonDTO personDTO = personMapper.personToPersonDto(personCreated);
-        return ResponseEntity.status(HttpStatus.CREATED).body(personDTO);
+    public ResponseEntity<PersonDTO> createPerson(@RequestBody PersonCreateDTO personCreateDTO) {
+        PersonDTO personDTO = personMapper.personCreateDtoToPersonDto(personCreateDTO);
+        Person personCreated = personService.create(personDTO);
+        PersonDTO personDtoCreated = personMapper.personToPersonDto(personCreated);
+        return ResponseEntity.status(HttpStatus.CREATED).body(personDtoCreated);
     }
 
     @PutMapping("person/{id}")
-    public ResponseEntity<PersonDTO> updatePerson(@PathVariable Long id, @RequestBody PersonCreateDTO personCreateDTO){
-        Person person = personMapper.personCreateDtoToPerson(personCreateDTO);
-        Person personUpdated = personService.update(id, person);
-        PersonDTO personDTO = personMapper.personToPersonDto(personUpdated);
-        return ResponseEntity.ok(personDTO);
+    public ResponseEntity<PersonDTO> updatePerson(@PathVariable Long id,
+                                                  @RequestBody PersonCreateDTO personCreateDTO) {
+        PersonDTO personDTO = personMapper.personCreateDtoToPersonDto(personCreateDTO);
+        Person personUpdated = personService.update(id, personDTO);
+        PersonDTO personUpdatedDto = personMapper.personToPersonDto(personUpdated);
+        return ResponseEntity.ok(personUpdatedDto);
     }
 
-    @DeleteMapping("personq{id}")
-    public ResponseEntity deletePerson(Long id){
+    @DeleteMapping("person/{id}")
+    public ResponseEntity deletePerson(@PathVariable Long id) {
         personService.deletePerson(id);
         return ResponseEntity.noContent().build();
     }
