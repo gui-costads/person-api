@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
 public class PersonMapper {
     private static final ModelMapper MODEL_MAPPER = new ModelMapper();
 
-    public Person personDtoToPerson(PersonDTO personDto){
+    public Person personDtoToPerson(PersonDTO personDto) {
         return MODEL_MAPPER.map(personDto, Person.class);
     }
 
-    public Person personCreateDtoToPerson(PersonCreateDTO personCreateDTO){
-        return  MODEL_MAPPER.map(personCreateDTO, Person.class);
+    public PersonDTO personCreateDtoToPersonDto(PersonCreateDTO personCreateDTO) {
+        return MODEL_MAPPER.map(personCreateDTO, PersonDTO.class);
     }
 
     public PersonDTO personToPersonDto(Person person) {

@@ -13,19 +13,24 @@ import java.util.stream.Collectors;
 public class AddressMapper {
     private static final ModelMapper MODEL_MAPPER = new ModelMapper();
 
-    public Address addressDtoToAddress(AddressDTO addressDTO){
+    public Address addressDtoToAddress(AddressDTO addressDTO) {
         return MODEL_MAPPER.map(addressDTO, Address.class);
     }
 
-    public List<Address>  addressListDtoToAddressList(List<AddressDTO> addressDTOList){
+    public List<Address> addressListDtoToAddressList(List<AddressDTO> addressDTOList) {
         return addressDTOList.stream().map(this::addressDtoToAddress).collect(Collectors.toList());
     }
 
-    public AddressDTO addressToAddressDto(Address address){
+    public List<AddressDTO> addressListToAddressListDto(List<Address> addressList) {
+        return addressList.stream().map(this::addressToAddressDto).collect(Collectors.toList());
+    }
+
+    public AddressDTO addressToAddressDto(Address address) {
         return MODEL_MAPPER.map(address, AddressDTO.class);
     }
 
-    public Address addressCreateDtoToAddress(AddressCreateDTO addressCreateDTO){
-        return MODEL_MAPPER.map(addressCreateDTO, Address.class);
+    public AddressDTO addressCreateDtoToAddressDto(AddressCreateDTO addressCreateDTO) {
+        return MODEL_MAPPER.map(addressCreateDTO, AddressDTO.class);
     }
+
 }
