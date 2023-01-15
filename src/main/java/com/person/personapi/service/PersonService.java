@@ -1,41 +1,54 @@
 package com.person.personapi.service;
 
+import com.person.personapi.dto.PersonDTO;
 import com.person.personapi.exception.PersonNotFoundException;
+import com.person.personapi.mapper.PersonMapper;
 import com.person.personapi.model.Person;
 import com.person.personapi.repository.PersonRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class PersonService {
     private final PersonRepository personRepository;
+    private final PersonMapper personMapper;
 
-    public PersonService(PersonRepository personRepository) {
+    public PersonService(PersonRepository personRepository, PersonMapper personMapper) {
         this.personRepository = personRepository;
+        this.personMapper = personMapper;
     }
 
-    public List<Person> findAll(){
+    @Transactional(readOnly = true)
+    public List<Person> findAll() {
         return personRepository.findAll();
     }
-    public Person findById(Long id){
-        return personRepository.findById(id).orElseThrow(
-                () -> new PersonNotFoundException(id)
-        );
+
+    @Transactional(readOnly = true)
+
+    public Person findById(Long id) {
+        return personRepository.findById(id).orElseThrow(() -> new PersonNotFoundException(id));
     }
 
-    public Person create(Person person){
+    @Transactional
+    public Person create(PersonDTO personDTO) {
+        Person person = personMapper.personDtoToPerson(personDTO);
         return personRepository.save(person);
     }
 
-    public Person update(Long id, Person person){
-        Person personIdtoUpdate = findById(person.getId());
-        personIdtoUpdate.setName(person.getName());
-        personIdtoUpdate.setBirth(person.getBirth());
-        return personRepository.save(personIdtoUpdate);
+    @Transactional
+    public Person update(Long id, PersonDTO personDTO) {
+
+        Person personId = findById(id);
+        personId.setName(personDTO.getName());
+        personId.setBirth(personDTO.getBirth());
+        personId.setId(id);
+        return personRepository.save(personId);
     }
 
-    public void deletePerson(Long id){
+    @Transactional
+    public void deletePerson(Long id) {
         findById(id);
         personRepository.deleteById(id);
     }

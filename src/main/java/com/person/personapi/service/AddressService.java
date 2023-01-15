@@ -1,12 +1,19 @@
 package com.person.personapi.service;
 
+import com.person.personapi.dto.AddressDTO;
+import com.person.personapi.exception.AddressNotFoundException;
+import com.person.personapi.exception.PersonNotFoundException;
+import com.person.personapi.mapper.AddressMapper;
 import com.person.personapi.mapper.PersonMapper;
 import com.person.personapi.model.Address;
 import com.person.personapi.model.Person;
 import com.person.personapi.dto.PersonDTO;
 import com.person.personapi.repository.AddressRepository;
+import com.person.personapi.repository.PersonRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,35 +22,62 @@ public class AddressService {
     private final AddressRepository addressRepository;
     private final PersonService personService;
     private final PersonMapper personMapper;
+    private final PersonRepository personRepository;
+    private final AddressMapper addressMapper;
 
-    public AddressService(AddressRepository addressRepository, PersonService personService, PersonMapper personMapper) {
+    public AddressService(AddressRepository addressRepository, PersonService personService, PersonMapper personMapper,
+                          PersonRepository personRepository, AddressMapper addressMapper) {
         this.addressRepository = addressRepository;
         this.personService = personService;
         this.personMapper = personMapper;
+        this.personRepository = personRepository;
+        this.addressMapper = addressMapper;
     }
 
-    public List<Address> findAllAddress(Long id){
+    @Transactional(readOnly = true)
+    public List<Address> findAllAddress(Long id) {
         Person person = personService.findById(id);
-        List<Address> addressList = person.getAddress();
-        List<Long> listId = addressList.stream().map(x -> x.getId()).collect(Collectors.toList());
-        return addressRepository.findAllById(listId);
+        List<Long> addressId = person.getAddress().stream().map(x -> x.getId()).collect(Collectors.toList());
+        List<Address> addressList = addressRepository.findAllById(addressId);
+        return person.getAddress();
     }
 
-    public Address findByiD(PersonDTO personDTO, Long id){
-        Person person = personMapper.personDtoToPerson(personDTO);
-        Address address =  person.getAddress().get(id.intValue());
-        return addressRepository.findById(address.getId()).get();
+    @Transactional(readOnly = true)
+    public Address findByiD(Long id) {
+        return addressRepository.findById(id).orElseThrow(
+                () -> new AddressNotFoundException(id)
+        );
     }
 
-    public Address createAddress(PersonDTO personDTO, Address address){
-        Person person = personMapper.personDtoToPerson(personDTO);
-        person.getAddress().set(0,address);
+    @Transactional
+    public Address createAddress(AddressDTO addressDTO) {
+        Address address = addressMapper.addressDtoToAddress(addressDTO);
         return addressRepository.save(address);
     }
 
-    public void deleteAddress(PersonDTO personDTO, Long id){
-        Person person = personMapper.personDtoToPerson(personDTO);
-        person.getAddress().remove(findByiD(personDTO,id));
-        addressRepository.deleteById(id);
+    @Transactional
+    public Address addAddressToPerson(Long person_id, Long address_id) {
+        Address address = findByiD(address_id);
+        Person person = personService.findById(person_id);
+        address.setPerson(person);
+        return address;
+    }
+
+    @Transactional
+    public Address updateAddress(Long address_id, AddressDTO addressDTO) {
+        Address address = addressMapper.addressDtoToAddress(addressDTO);
+        Address addressId = findByiD(address_id);
+        addressId.setId(address_id);
+        addressId.setStreet(addressDTO.getStreet());
+        addressId.setNumber(addressDTO.getNumber());
+        addressId.setCity(addressDTO.getCity());
+        addressId.setPostalCode(addressDTO.getPostalCode());
+        addressRepository.save(addressId);
+        return address;
+    }
+
+    @Transactional
+    public void deleteAddress(Long address_id) {
+        addressRepository.deleteById(address_id);
     }
 }
