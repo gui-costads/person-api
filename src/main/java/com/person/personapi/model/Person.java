@@ -1,5 +1,8 @@
 package com.person.personapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -15,10 +18,9 @@ public class Person {
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "birth", nullable = false)
-
     private LocalDate birth;
-    @Column(name = "address")
-    @OneToMany(mappedBy = "person")
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Address> address;
 
     public Person() {

@@ -1,5 +1,8 @@
 package com.person.personapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,14 +13,14 @@ public class Address {
     private Long id;
     @Column(name = "street", nullable = false)
     private String street;
-    @Column(name = "numer", nullable = false)
+    @Column(name = "number", nullable = false)
     private String number;
     @Column(name = "city", nullable = false)
     private String city;
     @Column(name = "postalCode", nullable = false)
     private String postalCode;
-    @ManyToOne
-    @JoinColumn(name = "person_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "person_id")
     private Person person;
 
     public Address() {
@@ -72,6 +75,7 @@ public class Address {
         this.postalCode = postalCode;
     }
 
+    @JsonIgnore
     public Person getPerson() {
         return person;
     }
