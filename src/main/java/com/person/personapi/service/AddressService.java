@@ -2,18 +2,15 @@ package com.person.personapi.service;
 
 import com.person.personapi.dto.AddressDTO;
 import com.person.personapi.exception.AddressNotFoundException;
-import com.person.personapi.exception.PersonNotFoundException;
 import com.person.personapi.mapper.AddressMapper;
 import com.person.personapi.mapper.PersonMapper;
 import com.person.personapi.model.Address;
 import com.person.personapi.model.Person;
-import com.person.personapi.dto.PersonDTO;
 import com.person.personapi.repository.AddressRepository;
 import com.person.personapi.repository.PersonRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

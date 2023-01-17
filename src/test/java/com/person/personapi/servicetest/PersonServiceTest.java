@@ -1,33 +1,19 @@
 package com.person.personapi.servicetest;
 
 import com.person.personapi.dto.PersonDTO;
-import com.person.personapi.exception.PersonNotFoundException;
 import com.person.personapi.mapper.PersonMapper;
 import com.person.personapi.model.Person;
 import com.person.personapi.repository.PersonRepository;
 import com.person.personapi.service.PersonService;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.stereotype.Repository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
-import static org.mockito.Mockito.*;
-
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 public class PersonServiceTest {
@@ -38,9 +24,6 @@ public class PersonServiceTest {
 
     @Autowired
     PersonMapper personMapper;
-
-
-
     @Test
     void findAllTest(){
         PersonDTO personDTO = new PersonDTO();
@@ -70,6 +53,7 @@ public class PersonServiceTest {
         personDto2.setName("Kirk");
         personDto2.setBirth(LocalDate.of(2008,12,23));
         Person person2 = personService.create(personDto2);
+
         Assertions.assertEquals("Daniel", person.getName());
         Assertions.assertEquals("10/10/2010", person.getBirth().format(dateTimeFormatter));
         Assertions.assertEquals("Kirk", person2.getName());
@@ -89,7 +73,6 @@ public class PersonServiceTest {
         Assertions.assertEquals("Daniel", personFinded.getName());
         Assertions.assertEquals("10/10/2010", personFinded.getBirth().format(dateTimeFormatter));
     }
-
     @Test
     void updatePersonTest(){
         PersonDTO personDto = new PersonDTO();

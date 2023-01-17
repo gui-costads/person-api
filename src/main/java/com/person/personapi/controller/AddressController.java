@@ -2,7 +2,6 @@ package com.person.personapi.controller;
 
 import com.person.personapi.dto.AddressCreateDTO;
 import com.person.personapi.dto.AddressDTO;
-import com.person.personapi.dto.PersonDTO;
 import com.person.personapi.mapper.AddressMapper;
 import com.person.personapi.mapper.PersonMapper;
 import com.person.personapi.model.Address;

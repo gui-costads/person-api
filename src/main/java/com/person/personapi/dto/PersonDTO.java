@@ -16,7 +16,6 @@ public class PersonDTO {
     @NotBlank
     @Size(min = 1, max = 50)
     private String name;
-
     @JsonFormat(pattern = "dd/MM/yyyy", locale = "pt-BR")
     @NotNull
     @Past
