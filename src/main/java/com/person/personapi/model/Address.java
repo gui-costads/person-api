@@ -75,7 +75,6 @@ public class Address {
         this.postalCode = postalCode;
     }
 
-    @JsonIgnore
     public Person getPerson() {
         return person;
     }

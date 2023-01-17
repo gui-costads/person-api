@@ -39,7 +39,7 @@ public class AddressService {
         Person person = personService.findById(id);
         List<Long> addressId = person.getAddress().stream().map(x -> x.getId()).collect(Collectors.toList());
         List<Address> addressList = addressRepository.findAllById(addressId);
-        return person.getAddress();
+        return addressList;
     }
 
     @Transactional(readOnly = true)

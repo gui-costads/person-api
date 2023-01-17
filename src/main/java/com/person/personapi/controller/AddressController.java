@@ -39,7 +39,7 @@ public class AddressController {
         return ResponseEntity.ok(addressDTOList);
     }
 
-    @PostMapping(value = "person/{id}/address")
+    @PostMapping("person/{id}/address")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<AddressDTO> createAddress(@PathVariable(name = "id") Long id,
                                                     @RequestBody AddressCreateDTO addressCreateDTO) {

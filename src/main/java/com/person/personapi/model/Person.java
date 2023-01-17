@@ -1,11 +1,14 @@
 package com.person.personapi.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Past;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,10 +21,12 @@ public class Person {
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "birth", nullable = false)
+    @JsonFormat(pattern = "dd/MM/yyyy", locale = "pt-BR")
+    @Past
     private LocalDate birth;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "person", fetch = FetchType.EAGER, orphanRemoval = true)
-    private List<Address> address;
+    private List<Address> address = new ArrayList<>();
 
     public Person() {
     }
@@ -62,6 +67,7 @@ public class Person {
     }
 
     public void setAddress(List<Address> address) {
-        this.address = address;
+        this.address.clear();
+        this.address.addAll(address);
     }
 }

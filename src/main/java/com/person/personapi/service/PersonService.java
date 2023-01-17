@@ -26,7 +26,6 @@ public class PersonService {
     }
 
     @Transactional(readOnly = true)
-
     public Person findById(Long id) {
         return personRepository.findById(id).orElseThrow(() -> new PersonNotFoundException(id));
     }
@@ -39,7 +38,6 @@ public class PersonService {
 
     @Transactional
     public Person update(Long id, PersonDTO personDTO) {
-
         Person personId = findById(id);
         personId.setName(personDTO.getName());
         personId.setBirth(personDTO.getBirth());

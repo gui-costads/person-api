@@ -5,6 +5,7 @@ import com.person.personapi.model.Person;
 import com.person.personapi.dto.PersonCreateDTO;
 import com.person.personapi.dto.PersonDTO;
 import com.person.personapi.service.PersonService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,14 +32,14 @@ public class PersonController {
     }
 
     @GetMapping("/person/{id}")
-    public ResponseEntity<PersonDTO> findById(Long id) {
+    public ResponseEntity<PersonDTO> findById(@PathVariable Long id) {
         Person person = personService.findById(id);
         PersonDTO personDTO = personMapper.personToPersonDto(person);
         return ResponseEntity.ok(personDTO);
     }
 
     @PostMapping("/person")
-    public ResponseEntity<PersonDTO> createPerson(@RequestBody PersonCreateDTO personCreateDTO) {
+    public ResponseEntity<PersonDTO> createPerson(@RequestBody @Valid PersonCreateDTO personCreateDTO) {
         PersonDTO personDTO = personMapper.personCreateDtoToPersonDto(personCreateDTO);
         Person personCreated = personService.create(personDTO);
         PersonDTO personDtoCreated = personMapper.personToPersonDto(personCreated);
@@ -47,7 +48,7 @@ public class PersonController {
 
     @PutMapping("person/{id}")
     public ResponseEntity<PersonDTO> updatePerson(@PathVariable Long id,
-                                                  @RequestBody PersonCreateDTO personCreateDTO) {
+                                                  @RequestBody @Valid PersonCreateDTO personCreateDTO) {
         PersonDTO personDTO = personMapper.personCreateDtoToPersonDto(personCreateDTO);
         Person personUpdated = personService.update(id, personDTO);
         PersonDTO personUpdatedDto = personMapper.personToPersonDto(personUpdated);

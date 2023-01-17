@@ -13,7 +13,6 @@ public class PersonCreateDTO {
     private String name;
     @JsonFormat(pattern = "dd/MM/yyyy", locale = "pt-BR")
     @NotNull
-    @NotBlank
     @Past
     private LocalDate birth;
 

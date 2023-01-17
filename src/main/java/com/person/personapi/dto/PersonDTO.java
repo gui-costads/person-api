@@ -19,7 +19,6 @@ public class PersonDTO {
 
     @JsonFormat(pattern = "dd/MM/yyyy", locale = "pt-BR")
     @NotNull
-    @NotBlank
     @Past
     private LocalDate birth;
 
