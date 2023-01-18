@@ -1,9 +1,7 @@
 package com.person.personapi.servicetest;
 
 import com.person.personapi.dto.PersonDTO;
-import com.person.personapi.mapper.PersonMapper;
 import com.person.personapi.model.Person;
-import com.person.personapi.repository.PersonRepository;
 import com.person.personapi.service.PersonService;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,12 +16,7 @@ import java.util.List;
 @ExtendWith(SpringExtension.class)
 public class PersonServiceTest {
     @Autowired
-    PersonRepository personRepository;
-    @Autowired
     PersonService personService;
-
-    @Autowired
-    PersonMapper personMapper;
     @Test
     void findAllTest(){
         PersonDTO personDTO = new PersonDTO();
