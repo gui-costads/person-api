@@ -38,6 +38,14 @@ public class AddressController {
         return ResponseEntity.ok(addressDTOList);
     }
 
+    @GetMapping("/person/{id}/address/{address_id}")
+    public ResponseEntity<AddressDTO> findById(@PathVariable Long id, @PathVariable Long address_id) {
+        Person person = personService.findById(id);
+        Address address = addressService.findByiD(address_id);
+        AddressDTO addressDTO = addressMapper.addressToAddressDto(address);
+        return ResponseEntity.ok(addressDTO);
+    }
+
     @PostMapping("person/{id}/address")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<AddressDTO> createAddress(@PathVariable(name = "id") Long id,

@@ -16,7 +16,7 @@ public class Address {
     private String city;
     @Column(name = "postalCode", nullable = false)
     private String postalCode;
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "person_id")
     private Person person;
 

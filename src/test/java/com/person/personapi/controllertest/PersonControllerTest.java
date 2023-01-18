@@ -77,7 +77,7 @@ public class PersonControllerTest {
         Assertions.assertEquals(response.getStatus(), HttpStatus.CREATED.value());
     }
     @Test
-    void updatePersonStatusCreated() throws Exception {
+    void updatePersonStatusOk() throws Exception {
         Person person3 = new Person();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         person3.setId(3L);
