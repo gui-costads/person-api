@@ -25,7 +25,7 @@ docker build  -t spring-person-api .
 
 Run
 ```
-docker run  -t spring-person-api
+docker run  -p 8080:8080 spring-person-api
 ```
 
 ## Access
