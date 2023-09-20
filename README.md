@@ -2,10 +2,38 @@
 ## Description
 Project to create and manage personal infos of a person
 
+## Class Diagram
+```mermaid
+classDiagram
+  class User {
+    -name: string
+    -birth: string
+    -address: List< Address >
+  }
+
+  class Address {
+    -street: string
+    -number: string
+    -city: string
+    -postalCode: string
+  }
+
+  User --> "1..*" Address
+
+```
+
+
 ## Requirements
 - [Git](https://docs.docker.com/engine/install/ubuntu/)
 - [Docker](https://docs.docker.com/engine/install/ubuntu/)
 
+
+- ## Swagger Doc API Online
+Documentation generated with Swagger
+
+https://person-api-doc.up.railway.app/swagger-ui/index.html
+
+OR
 
 ## Build and Run the app
 
@@ -20,18 +48,21 @@ git clone git@github.com:gui-costads/person-api.git
 
 Build
 ```
-docker build  -t spring-person-api .
+docker build  -t person-api-spring .
 ```
 
 Run
 ```
-docker run  -p 8080:8080 spring-person-api
+docker run  -p 8080:8080 person-api-spring
 ```
 
 ## Access
 ```
 http://localhost:8080/swagger-ui/index.html
 ```
+
+
+
 
 ## Features
 - Get list person
