@@ -89,6 +89,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>person-api-spring</finalName>
 	</build>
 
 </project>
